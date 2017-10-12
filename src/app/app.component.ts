@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private websocketService: WebsocketService) {};
 
   ngOnInit(): void {
-    this.messages = <Subject<any>>this.websocketService.connect('ws://localhost:3000')
+    this.messages = <Subject<any>>this.websocketService.connect('ws://jcjolley.com:3000')
     .map((response: MessageEvent): any => {
       console.log('response: ', JSON.stringify(response));
       return response.data
