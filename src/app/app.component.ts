@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     this.messages.subscribe(msg => {
       console.log("Response from websocket: " + msg)
     })
-
   }
 
   sendMsg() {
