@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     this.messages = <Subject<any>>this.websocketService.connect('ws://jcjolley.com:3000')
     .map((response: MessageEvent): any => {
       console.log('response: ', JSON.stringify(response));
-      return response.data
+      return response.data;
     })
 
     this.messages.subscribe(msg => {
