@@ -11,7 +11,8 @@ export class AppComponent implements OnInit {
   title = 'app';
   public messages: Subject<any>
   constructor(private websocketService: WebsocketService) {};
-
+  private recieved = [];
+  public displayed = [];
   ngOnInit(): void {
     this.messages = <Subject<any>>this.websocketService.connect('ws://jcjolley.com:3000')
     .map((response: MessageEvent): any => {
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
     })
 
     this.messages.subscribe(msg => {
+      this.recieved.push(msg);
+      this.displayed = this.recieved.slice(Math.max(this.recieved.length - 7, 0))
       console.log("Response from websocket: " + msg)
     })
   }
