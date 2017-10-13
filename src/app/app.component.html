@@ -3,9 +3,13 @@
   <h1>
     Websocket Clicker Game
   </h1>
-  <button (click)="sendMsg()">Get 10 copper ore!</button>
+  <div><button #gatherWood >Gather Wood</button></div>
+  <div><button #mineCopper >Mine Copper</button></div>
+  <div><button #repairWall >Repair the Wall</button></div>
+</div>
+<app-state-display></app-state-display>
   <div>
+    Display:
     <p *ngFor="let msg of displayed">{{msg}}</p>
   </div>
-</div>
 <router-outlet></router-outlet>
