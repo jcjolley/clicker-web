@@ -1,4 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<div style="position: fixed; top:0px; right:0px;">
+  <label>User:</label>
+  <input type="text" [(ngModel)]="user">
+</div>
 <div style="text-align:center">
   <h1>
     Websocket Clicker Game
@@ -12,4 +16,5 @@
     Display:
     <p *ngFor="let msg of displayed">{{msg}}</p>
   </div>
+
 <router-outlet></router-outlet>

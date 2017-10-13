@@ -1,3 +1,11 @@
-<div style="margin: 20px; padding:20px; border: 1px solid black">
- <p *ngFor="let key of getKeys()">{{key}}: {{state[key]}}</p> 
+<div style="margin: 20px; padding:20px; border: 1px solid black" [class.gameover]="stateService.state?.wallHp < 1">
+ <p *ngFor="let key of getKeys()">{{key}}: {{stateService.state[key]}}</p> 
+</div>
+
+<div *ngIf="stateService.state?.wallHp < 1" style="background: darkred; color: lightgrey;">
+  The wall has crumbled!  Act quickly, or our enemies will prevail!
+</div>
+
+<div *ngIf="stateService.state?.wallHp > 0" style="background: darkgreen; color: white;">
+  There is hope while the wall still stands.  Don't let it fall!
 </div>

@@ -1,5 +1,7 @@
+import { StateService } from './state.service';
 import { StoreService } from './store.service';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,11 +16,13 @@ import { StateDisplayComponent } from './state-display/state-display.component'
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     WebsocketService,
-    StoreService
+    StoreService,
+    StateService
   ],
   bootstrap: [AppComponent]
 })

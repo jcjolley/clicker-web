@@ -11,29 +11,18 @@ import * as R from 'ramda';
 })
 export class AppComponent implements OnInit {
   public messages: Observable<any>
-  public emitter: Subject<any>;
   private recieved = [];
   public displayed = [];
-
+  user = "Jolley"
   @ViewChild('gatherWood') gatherWoodBtn: ElementRef;
   @ViewChild('mineCopper') mineCopperBtn: ElementRef;
   @ViewChild('repairWall') repairWallBtn: ElementRef;
 
-  constructor(private websocketService: WebsocketService) { };
+  constructor(private socket: WebsocketService) { };
 
   ngOnInit(): void {
-     const {messages, emitter} = this.websocketService.connect();
-     this.messages = messages
-      .map((response: MessageEvent): any => {
-        console.log('response: ', JSON.stringify(response));
-        return response.data;
-      })
-    
-    this.emitter = emitter;
-    this.emitter.subscribe(msg => {
-      console.log('Emitter snagged: ', msg)
-    })
-
+     this.messages = this.socket.connect()
+      
     this.messages.subscribe(msg => {
       console.log("Response from websocket: " + msg)
       const data = JSON.parse(msg);
@@ -63,9 +52,9 @@ export class AppComponent implements OnInit {
     })
  }
 
-  gatherWood() { this.emitter.next({ user: 'Jolley', action: { type: 'ADD WOOD', payload: '5' } }); }
-  mineCopper() { this.emitter.next({ user: 'Jolley', action: { type: 'ADD COPPER', payload: '5' } }); }
-  repairWall() { this.emitter.next({ user: 'Jolley', action: { type: 'REPAIR WALL', payload: '5' } }); }
+  gatherWood() { this.socket.input.next(JSON.stringify({ user: this.user, action: { type: 'ADD WOOD', payload: 4 + getRandomInt(1,6) } })); }
+  mineCopper() { this.socket.input.next(JSON.stringify({ user: this.user, action: { type: 'ADD COPPER', payload: 4 + getRandomInt(1,6) } })); }
+  repairWall() { this.socket.input.next(JSON.stringify({ user: this.user, action: { type: 'REPAIR WALL', payload: 10 } })); }
 
   getDisplayed(recieved) {
     return R.pipe(
@@ -74,4 +63,10 @@ export class AppComponent implements OnInit {
       R.map(R.prop('msg'))
     )(recieved)
   }
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
