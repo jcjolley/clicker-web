@@ -7,19 +7,19 @@ import * as Rx from 'rxjs/Rx';
 
 @Injectable()
 export class WebsocketService {
-  private url
+  private url;
   constructor() {
-    if (environment.production) {
-      this.url = 'ws://jcjolley.com:3000';
-    } else {
+    if (location.href.includes('localhost')) {
       this.url = 'ws://localhost:3000';
+    } else {
+      this.url = 'ws://jcjolley.com:3000';
     }
   }
-  
+
   // this subject queues as necessary to ensure every message is delivered
   input = new QueueingSubject<string>()
   messages;
-  connectionStatus; 
+  connectionStatus;
   // this method returns an object which contains two observables
   public connect() {
     if (!this.messages) {
